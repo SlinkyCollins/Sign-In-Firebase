@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div id="dip"></div>
+    <button onclick="signO()">Sign Out</button>
+
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
+        import {
+            getAuth,
+            onAuthStateChanged,
+            signOut
+        } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-auth.js";
+
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyD7K36q2y2w-HQDFTHxQlCP_B-k_twx8hg",
+            authDomain: "sign-in-firebase-716a2.firebaseapp.com",
+            projectId: "sign-in-firebase-716a2",
+            storageBucket: "sign-in-firebase-716a2.appspot.com",
+            messagingSenderId: "397437441705",
+            appId: "1:397437441705:web:261c4ec36b36f62853fbb8"
+        };
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth();
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                console.log(user);
+                let nomenclature = user.displayName
+                let imago = user.photoURL
+                let mail = user.providerData[0].email || user.email
+                dip.innerHTML += `
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#"><img src=${imago} alt="profile-pic"/></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Dropdown
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Action</a></li>
+              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <h1>Welcome home, ${user.displayName}</h1>
+  <p>Your email is ${mail}</p>
+
+  <div> 
+    <input type="text" placeholder="Name of movie" />
+    <input type="text" placeholder="Genre" />
+    <input type="number" placeholder="Year of release" />
+    <input type="file" />
+  </div>
+
+        `
+
+                // User is signed in, see docs for a list of available properties
+                // https://firebase.google.com/docs/reference/js/auth.user
+                const uid = user.uid;
+                // ...
+            } else {
+                window.location.href = "index.html";
+            }
+        });
+
+        const signO = () => {
+            const auth = getAuth();
+            signOut(auth).then(() => {
+                // Sign-out successful.
+                console.log("Log out successfully");
+            }).catch((error) => {
+                // An error happened.
+            });
+        }
+        window.signO = signO;
+    </script>
+</body>
+
+</html>
