@@ -1,44 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Document</title>
   <link rel="stylesheet" href="index.css" />
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" /> -->
 </head>
 
 <body>
   <div class="container">
-    <h1>Welcome Back <img src="../Icon/smile.svg" alt="" /></h1>
+    <h1>Welcome Back <img src="./Icon/smile.svg" alt="" /></h1>
     <p>Sign in to your account</p>
     <div>
       <label>Email Address</label>
       <div class="main">
-        <img src="../Icon/mail.svg" alt="" />
+        <img src="./Icon/mail.svg" alt="" />
         <input name="email" type="email" placeholder="Email" id="email-input" required />
       </div>
       <label>Password</label>
       <div class="main">
-        <img src="../Icon/lock.svg" alt="" />
+        <img src="./Icon/lock.svg" alt="" />
         <input name="password" type="password" placeholder="Password" id="password-input" required />
       </div>
       <button onclick="login()" class="login-btn" type="submit">
         Sign In
       </button>
       <button onclick="signInGit()" class="sign-in-btn1">
-        <img src="../Icon/github.svg" alt="" />Sign in with GitHub
+        <img src="./Icon/github.svg" alt="" /> Sign in with GitHub
       </button>
+      
       <button onclick="signInG()" class="sign-in-btn2">
-        <img src="../Icon/google.svg " alt="" id="google-icon" /> Sign in with
-        Google
+        <img src="./Icon/google.svg" id="google-icon" /> Sign in with Google
       </button>
+      
     </div>
     <!-- <button onclick="register()" class="submit-btn">Sign Up</button> -->
   </div>

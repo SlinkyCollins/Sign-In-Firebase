@@ -33,7 +33,7 @@
             </div>
         </div>
 
-        <button type="button" id="signup-btn">Sign Up</button>
+        <button type="button" onclick="signUp()">Sign Up</button>
 
         <!-- <div class="side-by-side-wrapper">
             <hr class="side-by-side">
@@ -74,7 +74,7 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
 
-        document.getElementById("signup-btn").addEventListener("click", function () {
+        const signUp = () => {
             // const firstName = document.getElementById('firstName').value;
             // const lastName = document.getElementById('lastName').value;
             const email = document.getElementById('email-input').value;
@@ -85,7 +85,7 @@
                     // Signed up 
                     const user = userCredential.user;
                     console.log(user);
-                    if (user) {
+                    if (email == user.email) {
                         window.location.href = "index.html";
                     }
                     // ...
@@ -93,9 +93,19 @@
                 .catch((error) => {
                     const errorCode = error.code;
                     const errorMessage = error.message;
+                    console.log(errorCode, errorMessage);
+                    if (errorCode == "auth/email-already-in-use") {
+                        emptyError.textContent = "An account already exist with the same email address";
+                        emptyError.style.color = "orange";
+                        setTimeout(()=> {
+                            emptyError.style.display = "none";
+                        }, 3000)
+                    }
                     // ..
                 });
-        });
+        }
+            
+        
 
 
     </script>
