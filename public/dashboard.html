@@ -33,7 +33,7 @@
       <button class="btn btn-warning w-100" onclick="addTodo()">Submit</button>
     </div>
 
-    <div id="todoList"></div>
+    <div id="display"></div>
 
     <button onclick="signO()">Sign Out</button>
 
@@ -69,7 +69,7 @@
       const app = initializeApp(firebaseConfig);
       const auth = getAuth(app);
       const database = getDatabase(app);
-      const index = 0;
+      let index = 0;
 
       onAuthStateChanged(auth, (user) => {
         if (user) {
@@ -145,24 +145,19 @@
         onAuthStateChanged(auth, (user) => {
           let userName = user.displayName;
           let showError = document.getElementById("showErr");
-          let todoInput = document.getElementById("todo");
-          let todoDescInput = document.getElementById("todoDesc");
-          let todo = todoInput.value;
-          let todoDesc = todoDescInput.value;
-
-          if (todo !== "" && todoDesc !== "") {
+          if (todo.value !== "" && todoDesc.value !== "") {
             showError.style.display = "none";
 
             let todoObj = {
-              todo: todo,
-              desc: todoDesc,
-              userName: userName,
-              date: date,
-              time: time,
+              todo: todo.value,
+              desc: todoDesc.value,
+              userName,
+              date,
+              time,
             };
-
-            // Display the values
-            displayTodo(todoObj);
+             todo.value = ""
+             todoDesc.value = ""
+             console.log(todoObj);
 
             let dbref = ref(database, `allTodos/${index}`);
             set(dbref, todoObj);
@@ -170,45 +165,65 @@
             if (done) {
               alert("saved");
             } else {
-              alert("Ko sise o!");
+              alert("Failed to save");
             }
-
-            // Clear input fields
-            todoInput.value = "";
-            todoDescInput.value = "";
           } else {
             showError.style.display = "block";
             showError.innerHTML = "Please fill the empty fields below";
           }
         });
       };
-
-      const displayTodo = (todoObj) => {
-        // Get the todoList container
-        let todoList = document.getElementById("todoList");
-
-        // Create a new div to display the values
-        let todoItem = document.createElement("div");
-        todoItem.innerHTML = `<hr>
-         <p><strong>${todoObj.userName}</strong> added a new todo:</p>
-            <p>Todo: ${todoObj.todo}</p>
-            <p>Todo Desc: ${todoObj.desc}</p>
-            <p>Date: ${todoObj.date}, Time: ${todoObj.time}</p>
-            <hr>
-         `;
-
-        // Append the new div to the todoList container
-        todoList.appendChild(todoItem);
-      };
-
       window.addTodo = addTodo;
+
+      // const displayTodo = (todoObj) => {
+      //   // Get the todoList container
+      //   let todoList = document.getElementById("todoList");
+
+      //   // Create a new div to display the values
+      //   let todoItem = document.createElement("div");
+      //   todoItem.innerHTML = `<hr>
+      //    <p><strong>${todoObj.userName}</strong> added a new todo:</p>
+      //       <p>Todo: ${todoObj.todo}</p>
+      //       <p>Todo Desc: ${todoObj.desc}</p>
+      //       <p>Date: ${todoObj.date}, Time: ${todoObj.time}</p>
+      //       <hr>
+      //    `;
+
+      //   // Append the new div to the todoList container
+      //   todoList.appendChild(todoItem);
+      // };
+
+      // window.displayTodo = displayTodo;
 
       let dbref = ref(database, "allTodos");
       onValue(dbref, (snapshot) => {
         const data = snapshot.val();
-        console.log("data");
-
-        index = snapshot.numChildren();
+        console.log(data);
+        index = Object.keys(data).length;
+        console.log(index);
+        if (data) {
+          const dataArray = Object.values(data)
+          index = dataArray.length;
+          display.innerHTML = dataArray
+          .map((todoObj, index)=>
+            `
+            <div class ="parent">
+              <div class="card">
+                  <div class="content-box">
+                    <span class="card-title">${todoObj.userName}</span>
+                    <span class="see-more">${todoObj.todo}</span>
+                    <span class="see-more">${todoObj.desc}</span>
+                    </div>
+                  <div class="date-box">
+                      <h2 class= "serialNumber">${index + 1}</h2>
+                      <span class="date">${todoObj.date}</span>
+                      <span class="time">${todoObj.time}</span>
+                    </div>
+              </div>
+            </div>
+            `
+          )
+        }
       });
     </script>
     <script

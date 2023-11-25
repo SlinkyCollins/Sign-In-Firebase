@@ -17,52 +17,79 @@ body {
 
 .container {
     text-align: center;
-    border: 1px solid #000;
+    border: 1px solid transparent;
     border-radius: 10px;
-    padding: 30px;
-    /* margin: 120px; */
-    max-width: 700px;
-    max-height: 850px;
-    /* margin: 150px auto 50px auto; */
+    padding: 30px 50px 50px 50px;
+    margin: 20px auto 0px auto;
+    max-width: 400px;
+    max-height: 450px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 }
 
-.side-by-side-wrapper {
+/* .side-by-side-wrapper {
    display: flex;
    align-items: center;
 }
 
 .side-by-side {
-    flex: 1; /*This makes the horizontal rules share the available space*/
-    /* margin: 0 10px; */
+    flex: 1; 
+    margin: 0 10px;
     max-width: 200px;
     margin-left: 40px;
     margin-right: 40px;
-}
+} */
 
 .name-container {
     display: flex;
 }
 
-/* .input-container {
-  
+.input-container {
+    padding: 10px;
 }
 
 .input-container input{
+    margin: 5px;
+    padding: 5px;
+}
 
+.checkbox-container label{
+    text-align: justify;
+    font-size: 14px;
+    margin-bottom: 10px;
 }
 
 #checkbox {
-} */
+    cursor: pointer;
+}
 
-.email-password-wrapper {
+.container button {
+    margin: 0px auto 10px auto;
+    padding: 10px 80px 10px 80px;
+    outline: none;
+    border: none;
+    /* border: 1px solid black; */
+    border-radius: 5px;
+    /* display: flex; */
+    cursor: pointer;
+    background-color: lightgreen;
+}
+
+.container button:hover {
+    background-color: rgb(8, 189, 8);
+}
+
+.text-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.form-wrapper {
     display: flex;
     flex-direction: column;
 }
 
-.email-password-wrapper input {
-    /* padding: 10px; */
-    width: 200px;
-    /* height: 30px; */
+.form-wrapper input {
     margin-left: auto;
     margin-right: auto;
 }
@@ -75,5 +102,26 @@ body {
 
 .button-wrapper button {
     margin: 5px;
-    width: 200px;
+    /* width: 200px; */
+}
+
+#firstName {
+    width: 500px;
+}
+
+#lastName {
+    width: 500px;
+}
+
+#email-input {
+    width: 280px;
+}
+
+#password-input {
+    width: 280px;
+}
+
+.random-text p{
+    padding: 5px;
+    font-size: 13px;
 }

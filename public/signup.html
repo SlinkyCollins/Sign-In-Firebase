@@ -2,34 +2,39 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="signup.css">
+    <link rel="stylesheet" href="signup.css" />
 </head>
 
 <body>
-
     <div class="container">
-        <h1>Sign up</h1>
-        <p>Create a brand new account here!</p>
+        <div class="text-wrapper">
+            <h1>Sign up</h1>
+            <p>Create a brand new account here!</p>
+        </div>
+        <p id="emptyError"></p>
         <div class="input-container">
-            <div class="email-password-wrapper">
+            <div class="form-wrapper">
                 <div class="name-container">
-                    <input type="text" placeholder="First Name" id="firstName" required>
-
-                    <input type="text" placeholder="Last Name" id="lastName" required>
+                    <input type="text" placeholder="First Name" id="firstName" required />
                 </div>
 
-                <div>
-                    <input type="email" placeholder="Email" id="email-input" required>
-                    <br>
-                    <input type="password" placeholder="Password" id="password-input" required>
+                <div class="name-container">
+                    <input type="text" placeholder="Last Name" id="lastName" required />
+                </div>
+
+                <div class="email-password-wrapper">
+                    <input type="email" placeholder="Email" id="email-input" required />
+                    <br />
+                    <input type="password" placeholder="Password" id="password-input" required />
                 </div>
             </div>
             <div class="checkbox-container">
-                <input type="checkbox" id="checkbox">
-                <label for="checkbox">Sign up for emails to get weekly updates, news, offers and promotions.</label>
+                <input type="checkbox" id="checkbox" />
+                <label for="checkbox">Sign up for emails to get weekly updates, news, offers and
+                    promotions.</label>
             </div>
         </div>
 
@@ -47,18 +52,25 @@
             <button>Sign up with GitHub</button>
         </div> -->
 
-        <p>By creating an account, you agree to <a href="#">our Privacy Policy</a> and <a href="#">Terms of use</a></p>
+        <div class="random-text">
+            <p>
+                By creating an account, you agree to
+                <a href="#">our Privacy Policy</a> and <a href="#">Terms of use</a>
+            </p>
 
-        <p>Already have an account? <a href="index.html">Sign in</a></p>
+            <p>Already have an account? <a href="index.html">Sign in</a></p>
+        </div>
     </div>
 
     <script type="module">
-
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
         // TODO: Add SDKs for Firebase products that you want to use
         // https://firebase.google.com/docs/web/setup#available-libraries
-        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-auth.js";
+        import {
+            getAuth,
+            createUserWithEmailAndPassword,
+        } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-auth.js";
 
         // Your web app's Firebase configuration
         const firebaseConfig = {
@@ -67,7 +79,7 @@
             projectId: "sign-in-firebase-716a2",
             storageBucket: "sign-in-firebase-716a2.appspot.com",
             messagingSenderId: "397437441705",
-            appId: "1:397437441705:web:261c4ec36b36f62853fbb8"
+            appId: "1:397437441705:web:261c4ec36b36f62853fbb8",
         };
 
         // Initialize Firebase
@@ -75,42 +87,47 @@
         const auth = getAuth(app);
 
         const signUp = () => {
-            // const firstName = document.getElementById('firstName').value;
-            // const lastName = document.getElementById('lastName').value;
-            const email = document.getElementById('email-input').value;
-            const password = document.getElementById('password-input').value;
+            const fname = document.getElementById('firstName').value;
+            const lname = document.getElementById('lastName').value;
+            const email = document.getElementById("email-input").value;
+            const password = document.getElementById("password-input").value;
 
-            createUserWithEmailAndPassword(auth, email, password)
-                .then((userCredential) => {
-                    // Signed up 
-                    const user = userCredential.user;
-                    console.log(user);
-                    if (email == user.email) {
-                        window.location.href = "index.html";
-                    }
-                    // ...
-                })
-                .catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    console.log(errorCode, errorMessage);
-                    if (errorCode == "auth/email-already-in-use") {
-                        emptyError.textContent = "An account already exist with the same email address";
-                        emptyError.style.color = "orange";
-                        setTimeout(()=> {
-                            emptyError.style.display = "none";
-                        }, 3000)
-                    }
-                    // ..
-                });
+            if (email != "" && password != "" && fname != "" && lname != "") {
+                createUserWithEmailAndPassword(auth, email, password)
+                    .then((userCredential) => {
+                        const user = userCredential.user;
+                        console.log(user);
+                        if (email == user.email) {
+                            window.location.href = "index.html";
+                        }
+                    })
+                    .catch((error) => {
+                        const errorCode = error.code;
+                        const errorMessage = error.message;
+                        console.log(errorCode, errorMessage);
+                        if (errorCode == "auth/email-already-in-use") {
+                            emptyError.textContent =
+                                "An account already exist with the same email address";
+                            emptyError.style.color = "orange";
+                            setTimeout(() => {
+                                emptyError.style.display = "none";
+                            }, 3000);
+                        }
+                        document.getElementById('email').value = ""
+                        document.getElementById('password').value = ""
+                        document.getElementById('firstname').value = ""
+                        document.getElementById('lastname').value = ""
+                    });
+            } else {
+                emptyError.textContent = "Please fill in the empty spaces provided";
+                emptyError.style.color = "red"
+                setTimeout(() => {
+                    emptyError.style.display = "none"
+                }, 3000)
+            }
         }
-            
-        
-
-
+        window.signUp = signUp
     </script>
-
-
 </body>
 
 </html>
