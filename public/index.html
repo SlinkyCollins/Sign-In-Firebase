@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,6 +10,9 @@
 </head>
 
 <body>
+
+  <div id="preloader"></div>
+
   <div class="container">
     <h1>Welcome Back <img src="./Icon/smile.svg" alt="" /></h1>
     <p>Sign in to your account</p>
@@ -29,11 +33,11 @@
       <button onclick="signInGit()" class="sign-in-btn1">
         <img src="./Icon/github.svg" alt="" /> Sign in with GitHub
       </button>
-      
+
       <button onclick="signInG()" class="sign-in-btn2">
         <img src="./Icon/google.svg" id="google-icon" /> Sign in with Google
       </button>
-      
+
     </div>
     <!-- <button onclick="register()" class="submit-btn">Sign Up</button> -->
   </div>
@@ -89,6 +93,15 @@
   </script>
   <script src="./script.js" type="module"></script>
   <script src="scriptGit.js" type="module"></script>
+
+
+  <script>
+    var loader = document.getElementById("preloader");
+
+    window.addEventListener("load", function () {
+      loader.style.display = "none";
+    })
+  </script>
 </body>
 
 </html>

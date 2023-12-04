@@ -95,3 +95,12 @@ h1 {
     height: 25px;
     object-fit: cover;
 }
+
+#preloader {
+    background: #000 url(Images/loader.gif) no-repeat center center;
+    background-size: 50%;
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    z-index: 100;
+}
