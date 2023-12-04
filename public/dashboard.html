@@ -1,83 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-      crossorigin="anonymous"
-    />
-  </head>
 
-  <body>
-    <div id="dip"></div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+</head>
 
-    <div id="showErr"></div>
+<body>
+  <div id="dip"></div>
 
-    <div class="col-lg-6 mx-auto mt-lg-5 shadow-sm p-4">
-      <input
-        type="text"
-        class="form-control my-3"
-        placeholder="Enter your todo"
-        id="todo"
-      />
-      <input
-        type="text"
-        class="form-control my-3"
-        placeholder="Todo description"
-        id="todoDesc"
-      />
-      <button class="btn btn-warning w-100" onclick="addTodo()">Submit</button>
-    </div>
+  <div id="showErr"></div>
 
-    <div id="display"></div>
+  <div class="col-lg-6 mx-auto mt-lg-5 shadow-sm p-4">
+    <input type="text" class="form-control my-3" placeholder="Enter your todo" id="todo" />
+    <input type="text" class="form-control my-3" placeholder="Todo description" id="todoDesc" />
+    <button class="btn btn-warning w-100" onclick="addTodo()">Submit</button>
+  </div>
 
-    <button onclick="signO()">Sign Out</button>
+  <div id="display"></div>
 
-    <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
-      import {
-        getAuth,
-        onAuthStateChanged,
-        signOut,
-      } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-auth.js";
-      import {
-        getDatabase,
-        ref,
-        set,
-        onValue,
-      } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-database.js";
+  <button onclick="signO()">Sign Out</button>
 
-      // TODO: Add SDKs for Firebase products that you want to use
-      // https://firebase.google.com/docs/web/setup#available-libraries
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
+    import {
+      getAuth,
+      onAuthStateChanged,
+      signOut,
+    } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-auth.js";
+    import {
+      getDatabase,
+      ref,
+      set,
+      onValue,
+    } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-database.js";
 
-      // Your web app's Firebase configuration
-      const firebaseConfig = {
-        apiKey: "AIzaSyD7K36q2y2w-HQDFTHxQlCP_B-k_twx8hg",
-        authDomain: "sign-in-firebase-716a2.firebaseapp.com",
-        projectId: "sign-in-firebase-716a2",
-        storageBucket: "sign-in-firebase-716a2.appspot.com",
-        messagingSenderId: "397437441705",
-        appId: "1:397437441705:web:261c4ec36b36f62853fbb8",
-        databaseURL:
-          "https://sign-in-firebase-716a2-default-rtdb.firebaseio.com",
-      };
-      // Initialize Firebase
-      const app = initializeApp(firebaseConfig);
-      const auth = getAuth(app);
-      const database = getDatabase(app);
-      let index = 0;
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
 
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          console.log(user);
-          let nomenclature = user.displayName || "Guest";
-          let mail = user.providerData[0].email || user.email || "No Email";
-          let imago = user.photoURL;
-          dip.innerHTML += `
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyD7K36q2y2w-HQDFTHxQlCP_B-k_twx8hg",
+      authDomain: "sign-in-firebase-716a2.firebaseapp.com",
+      projectId: "sign-in-firebase-716a2",
+      storageBucket: "sign-in-firebase-716a2.appspot.com",
+      messagingSenderId: "397437441705",
+      appId: "1:397437441705:web:261c4ec36b36f62853fbb8",
+      databaseURL:
+        "https://sign-in-firebase-716a2-default-rtdb.firebaseio.com",
+    };
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const database = getDatabase(app);
+    let index = 0;
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        console.log(user);
+        let nomenclature = user.displayName || "Guest";
+        let mail = user.providerData[0].email || user.email || "No Email";
+        let imago = user.photoURL;
+        dip.innerHTML += `
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
       <a class="navbar-brand" href="#"><img src=${imago} alt="profile-pic"/></a>
@@ -116,96 +103,96 @@
 
         `;
 
-          // User is signed in, see docs for a list of available properties
-          // https://firebase.google.com/docs/reference/js/auth.user
-          const uid = user.uid;
-          // ...
+        // User is signed in, see docs for a list of available properties
+        // https://firebase.google.com/docs/reference/js/auth.user
+        const uid = user.uid;
+        // ...
+      } else {
+        window.location.href = "index.html";
+      }
+    });
+
+    const signO = () => {
+      const auth = getAuth();
+      signOut(auth)
+        .then(() => {
+          // Sign-out successful.
+          console.log("Log out successfully");
+        })
+        .catch((error) => {
+          // An error happened.
+        });
+    };
+    window.signO = signO;
+
+    const addTodo = () => {
+      let date = new Date().toLocaleDateString();
+      let time = new Date().toLocaleTimeString();
+
+      onAuthStateChanged(auth, (user) => {
+        let userName = user.displayName;
+        let showError = document.getElementById("showErr");
+        if (todo.value !== "" && todoDesc.value !== "") {
+          showError.style.display = "none";
+
+          let todoObj = {
+            todo: todo.value,
+            desc: todoDesc.value,
+            userName,
+            date,
+            time,
+          };
+          todo.value = ""
+          todoDesc.value = ""
+          console.log(todoObj);
+
+          let dbref = ref(database, `allTodos/${index}`);
+          set(dbref, todoObj);
+          let done = set;
+          if (done) {
+            alert("saved");
+          } else {
+            alert("Failed to save");
+          }
         } else {
-          window.location.href = "index.html";
+          showError.style.display = "block";
+          showError.innerHTML = "Please fill the empty fields below";
         }
       });
+    };
+    window.addTodo = addTodo;
 
-      const signO = () => {
-        const auth = getAuth();
-        signOut(auth)
-          .then(() => {
-            // Sign-out successful.
-            console.log("Log out successfully");
-          })
-          .catch((error) => {
-            // An error happened.
-          });
-      };
-      window.signO = signO;
+    // const displayTodo = (todoObj) => {
+    //   // Get the todoList container
+    //   let todoList = document.getElementById("todoList");
 
-      const addTodo = () => {
-        let date = new Date().toLocaleDateString();
-        let time = new Date().toLocaleTimeString();
+    //   // Create a new div to display the values
+    //   let todoItem = document.createElement("div");
+    //   todoItem.innerHTML = `<hr>
+    //    <p><strong>${todoObj.userName}</strong> added a new todo:</p>
+    //       <p>Todo: ${todoObj.todo}</p>
+    //       <p>Todo Desc: ${todoObj.desc}</p>
+    //       <p>Date: ${todoObj.date}, Time: ${todoObj.time}</p>
+    //       <hr>
+    //    `;
 
-        onAuthStateChanged(auth, (user) => {
-          let userName = user.displayName;
-          let showError = document.getElementById("showErr");
-          if (todo.value !== "" && todoDesc.value !== "") {
-            showError.style.display = "none";
+    //   // Append the new div to the todoList container
+    //   todoList.appendChild(todoItem);
+    // };
 
-            let todoObj = {
-              todo: todo.value,
-              desc: todoDesc.value,
-              userName,
-              date,
-              time,
-            };
-             todo.value = ""
-             todoDesc.value = ""
-             console.log(todoObj);
+    // window.displayTodo = displayTodo;
 
-            let dbref = ref(database, `allTodos/${index}`);
-            set(dbref, todoObj);
-            let done = set;
-            if (done) {
-              alert("saved");
-            } else {
-              alert("Failed to save");
-            }
-          } else {
-            showError.style.display = "block";
-            showError.innerHTML = "Please fill the empty fields below";
-          }
-        });
-      };
-      window.addTodo = addTodo;
-
-      // const displayTodo = (todoObj) => {
-      //   // Get the todoList container
-      //   let todoList = document.getElementById("todoList");
-
-      //   // Create a new div to display the values
-      //   let todoItem = document.createElement("div");
-      //   todoItem.innerHTML = `<hr>
-      //    <p><strong>${todoObj.userName}</strong> added a new todo:</p>
-      //       <p>Todo: ${todoObj.todo}</p>
-      //       <p>Todo Desc: ${todoObj.desc}</p>
-      //       <p>Date: ${todoObj.date}, Time: ${todoObj.time}</p>
-      //       <hr>
-      //    `;
-
-      //   // Append the new div to the todoList container
-      //   todoList.appendChild(todoItem);
-      // };
-
-      // window.displayTodo = displayTodo;
-
-      let dbref = ref(database, "allTodos");
-      onValue(dbref, (snapshot) => {
-        const data = snapshot.val();
-        console.log(data);
-        index = Object.keys(data).length;
-        console.log(index);
-        if (data) {
-          const dataArray = Object.values(data)
-          index = dataArray.length;
-          display.innerHTML = dataArray
-          .map((todoObj, index)=>
+    let dbref = ref(database, "allTodos");
+    onValue(dbref, (snapshot) => {
+      const data = snapshot.val();
+      console.log(data);
+      index = Object.keys(data).length;
+      console.log(index);
+      if (data) {
+        const dataArray = Object.values(data)
+        index = dataArray.length;
+        display.innerHTML = dataArray
+          .map((todoObj, index) =>
             `
             <div class ="parent">
               <div class="card">
@@ -223,13 +210,12 @@
             </div>
             `
           )
-        }
-      });
-    </script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-      crossorigin="anonymous"
-    ></script>
-  </body>
+      }
+    });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+</body>
+
 </html>
